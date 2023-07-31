@@ -10,7 +10,9 @@ module Chatgpt
     def fetch_response
       response = post_chatgpt_request
 
-      response.dig('choices', 0, 'message', 'content')
+      return response.dig('choices', 0, 'message', 'content') if response['choices'].present?
+
+      return response.dig('error', 'message') if response['error'].present?
     end
 
     private
