@@ -19,11 +19,19 @@ module Chatgpt
 
     def post_chatgpt_request
       client = OpenAI::Client.new(access_token: ENV['ChatGPT_ACCESS_TOKEN'])
-
+    
+      messages_data = Message.all.order(:created_at).pluck(:writer, :body)
+    
+      messages = messages_data.map do |writer, body|
+        { role: (writer == "ChatGPT" ? "assistant" : "user"), content: body.to_s }
+      end
+    
+      messages << { role: 'user', content: @prompt.to_s }
+    
       client.chat(
         parameters: {
           model: @model,
-          messages: [{ role: 'system', content: @prompt }]
+          messages: messages, # Pass the messages array directly
         }
       )
     end
