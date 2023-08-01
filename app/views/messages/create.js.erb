@@ -2,8 +2,12 @@ var messageContainer = document.getElementById('message-div');
 var newMessageItem = document.createElement('div');
 var newChatGPTMessageItem = document.createElement('div');
 
-newMessageItem.innerHTML = '<p><strong><%= @message.user.name %> (You):</strong> <%= @message.body %></p>';
-newChatGPTMessageItem.innerHTML = '<p><strong>ChatGPT:</strong> <%= @chatgpt_message.body %></p>';
+
+newMessageItem.innerHTML = '<%= j(render(partial: "message", locals: { message: @message })) %>';
+newChatGPTMessageItem.innerHTML = '<%= j(render(partial: "chatgpt_message", locals: { message: @chatgpt_message })) %>';
+
+
+console.log(newChatGPTMessageItem);
 
 messageContainer.appendChild(newMessageItem);
 messageContainer.appendChild(newChatGPTMessageItem);

@@ -5,10 +5,10 @@
     <% @messages.each do |message| %>
       <div>
         <% if message.User? %>
-          <p><strong><%= message.user.name %> (You):</strong> <%= message.body %></p>
+          <%= render "message", message: message %>
         <% elsif message.ChatGPT? %>
-          <p><strong>ChatGPT:</strong> <%= message.body %></p>
-        <% else%>
+          <%= render "chatgpt_message", message: message %>
+        <% else %>
           <p><strong>Unknown Sender:</strong> <%= message.body %></p>
         <% end %>
       </div>
@@ -19,7 +19,7 @@
     <%= form_for(@message, format: :js, remote: true, authenticity_token: true, id: 'create-message-form') do |f| %>
       <div class="row">
         <%= f.text_field :body, placeholder: "Type your message...", class: "col-9 form-control mx-5 w-75", required: true %>
-        <%= f.submit "Send", class: 'col-2 btn btn-primary', data: { turbolinks: false } %>
+        <%= f.submit "Send", class: 'col-2 btn btn-primary' %>
       </div>
     <% end %>
   </div>
