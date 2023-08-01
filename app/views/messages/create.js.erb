@@ -1,0 +1,12 @@
+var messageContainer = document.getElementById('message-div');
+var newMessageItem = document.createElement('div');
+var newChatGPTMessageItem = document.createElement('div');
+
+newMessageItem.innerHTML = '<p><strong><%= @message.user.name %> (You):</strong> <%= @message.body %></p>';
+newChatGPTMessageItem.innerHTML = '<p><strong>ChatGPT:</strong> <%= @chatgpt_message.body %></p>';
+
+messageContainer.appendChild(newMessageItem);
+messageContainer.appendChild(newChatGPTMessageItem);
+
+document.getElementById('new_message').reset();
+window.scrollTo(0, document.body.scrollHeight);

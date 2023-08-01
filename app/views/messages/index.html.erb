@@ -1,20 +1,22 @@
 <div class="container">
   <h1 class="text-center">Welcome <%= current_user.name %>!</h1>
 
-  <div class="border mb-5 pb-5">
+  <div class="border mb-5 pb-5" id='message-div'>
     <% @messages.each do |message| %>
-      <% if message.User? %>
-        <p><strong><%= message.user.name %> (You):</strong> <%= message.body %></p>
-      <% elsif message.ChatGPT? %>
-        <p><strong>ChatGPT:</strong> <%= message.body %></p>
-      <% else%>
-        <p><strong>Unknown Sender:</strong> <%= message.body %></p>
-      <% end %>
+      <div>
+        <% if message.User? %>
+          <p><strong><%= message.user.name %> (You):</strong> <%= message.body %></p>
+        <% elsif message.ChatGPT? %>
+          <p><strong>ChatGPT:</strong> <%= message.body %></p>
+        <% else%>
+          <p><strong>Unknown Sender:</strong> <%= message.body %></p>
+        <% end %>
+      </div>
     <% end %>
   </div>
 
   <div class="fixed-bottom m-3">
-    <%= form_for(@message) do |f| %>
+    <%= form_for(@message, format: :js, remote: true, authenticity_token: true, id: 'create-message-form') do |f| %>
       <div class="row">
         <%= f.text_field :body, placeholder: "Type your message...", class: "col-9 form-control mx-5 w-75", required: true %>
         <%= f.submit "Send", class: 'col-2 btn btn-primary' %>
