@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
 
     if @message.save
       respond_to do |format|
-        chatgpt_response = Chatgpt::Api.new(@message.body).fetch_response
+        chatgpt_response = Chatgpt::Api.new(@message.body, current_user).fetch_response
         @chatgpt_message = current_user.messages.create(body: chatgpt_response, writer: :ChatGPT)
 
         format.html { redirect_to root_path }

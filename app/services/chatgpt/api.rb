@@ -2,9 +2,10 @@
 
 module Chatgpt
   class Api
-    def initialize(prompt, model = 'gpt-3.5-turbo')
+    def initialize(prompt, user, model = 'gpt-3.5-turbo')
       @prompt = prompt
       @model = model
+      @user = user
     end
 
     def fetch_response
@@ -20,7 +21,7 @@ module Chatgpt
     def post_chatgpt_request
       client = OpenAI::Client.new(access_token: ENV['ChatGPT_ACCESS_TOKEN'])
     
-      messages_data = Message.all.order(:created_at).pluck(:writer, :body)
+      messages_data = @user.messages.order(:created_at).pluck(:writer, :body)
     
       messages = messages_data.map do |writer, body|
         { role: (writer == "ChatGPT" ? "assistant" : "user"), content: body.to_s }
