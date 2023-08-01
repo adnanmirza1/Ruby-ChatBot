@@ -19,7 +19,7 @@
     <%= form_for(@message, format: :js, remote: true, authenticity_token: true, id: 'create-message-form') do |f| %>
       <div class="row">
         <%= f.text_field :body, placeholder: "Type your message...", class: "col-9 form-control mx-5 w-75", required: true %>
-        <%= f.submit "Send", class: 'col-2 btn btn-primary' %>
+        <%= f.submit "Send", class: 'col-2 btn btn-primary', data: { turbolinks: false } %>
       </div>
     <% end %>
   </div>
