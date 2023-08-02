@@ -2,25 +2,16 @@
   <h1 class="text-center">Welcome <%= current_user.name %>!</h1>
 
   <div class="border mb-5 pb-5" id='message-div'>
-    <% @messages.each do |message| %>
-      <div>
-        <% if message.User? %>
-          <%= render "message", message: message %>
-        <% elsif message.ChatGPT? %>
-          <%= render "chatgpt_message", message: message %>
-        <% else %>
-          <p><strong>Unknown Sender:</strong> <%= message.body %></p>
-        <% end %>
-      </div>
+    <%= turbo_frame_tag "messages_turbo_frame" do %>
+      <% @messages.each do |message| %>
+          <%= render 'message', message: message %>
+      <% end %>
     <% end %>
   </div>
 
   <div class="fixed-bottom m-3">
-    <%= form_for(@message, data: { remote: true, turbo: false }, authenticity_token: true, id: 'create-message-form') do |f| %>
-      <div class="row">
-        <%= f.text_field :body, placeholder: "Type your message...", class: "col-9 form-control mx-5 w-75", required: true %>
-        <%= f.submit "Send", class: 'col-2 btn btn-primary' %>
-      </div>
+    <%= turbo_frame_tag 'new_message_form' do %>
+      <%= render 'form', message: @message %>
     <% end %>
   </div>
 </div>

@@ -1,1 +1,9 @@
-<p><strong><%= message.user.name %> (You):</strong> <%= message.body %></p>
+<div id="<%= dom_id(message) %>">
+  <% if message.User? %>
+    <p><strong><%= message.user.name %> (You):</strong> <%= message.body %></p>
+  <% elsif message.ChatGPT? %>
+    <p><strong>ChatGPT:</strong> <%= message.body %></p>
+  <% else %>
+    <p><strong>Unknown Sender:</strong> <%= message.body %></p>
+  <% end %>
+</div>

@@ -13,7 +13,7 @@ class MessagesController < ApplicationController
         @chatgpt_message = current_user.messages.create(body: chatgpt_response, writer: :ChatGPT)
 
         format.html { redirect_to root_path }
-        format.js
+        format.turbo_stream
       end
     else
       redirect_to root_path, notice: @message.errors.full_messages
